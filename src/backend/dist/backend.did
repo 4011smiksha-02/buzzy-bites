@@ -1,0 +1,212 @@
+type UserProfilePublic = 
+ record {
+   favoriteRestaurantIds: vec RestaurantId;
+   reservationIds: vec ReservationId;
+   userId: UserId;
+ };
+type UserId = principal;
+type Timestamp = int;
+type SortField = 
+ variant {
+   name;
+   rating;
+ };
+type SearchFilter = 
+ record {
+   cuisineType: opt text;
+   nameQuery: opt text;
+   neighborhood: opt text;
+   priceRange: opt PriceRange;
+   sortBy: opt SortField;
+ };
+type RestaurantPublic = 
+ record {
+   address: text;
+   averageRating: float64;
+   cuisineType: text;
+   description: text;
+   email: text;
+   id: RestaurantId;
+   name: text;
+   neighborhood: text;
+   openingHours: vec OpeningHours;
+   phone: text;
+   priceRange: PriceRange;
+ };
+type RestaurantInput = 
+ record {
+   address: text;
+   cuisineType: text;
+   description: text;
+   email: text;
+   name: text;
+   neighborhood: text;
+   openingHours: vec OpeningHours;
+   phone: text;
+   priceRange: PriceRange;
+ };
+type RestaurantId = nat;
+type ReservationStatus = 
+ variant {
+   cancelled;
+   confirmed;
+   pending;
+ };
+type ReservationPublic = 
+ record {
+   bookingReference: text;
+   createdAt: Timestamp;
+   date: text;
+   guestCount: nat;
+   guestEmail: text;
+   guestName: text;
+   guestPhone: text;
+   id: ReservationId;
+   restaurantId: RestaurantId;
+   specialRequests: text;
+   status: ReservationStatus;
+   timeSlot: text;
+ };
+type ReservationInput = 
+ record {
+   date: text;
+   guestCount: nat;
+   guestEmail: text;
+   guestName: text;
+   guestPhone: text;
+   restaurantId: RestaurantId;
+   specialRequests: text;
+   timeSlot: text;
+ };
+type ReservationId = nat;
+type PriceRange = 
+ variant {
+   four;
+   one;
+   three;
+   two;
+ };
+type OpeningHours = 
+ record {
+   close: text;
+   closed: bool;
+   day: DayOfWeek;
+   open: text;
+ };
+type MenuItemPublic = 
+ record {
+   category: MenuCategory;
+   description: text;
+   id: MenuItemId;
+   imageUrl: opt text;
+   name: text;
+   price: float64;
+   restaurantId: RestaurantId;
+ };
+type MenuItemInput = 
+ record {
+   category: MenuCategory;
+   description: text;
+   imageUrl: opt text;
+   name: text;
+   price: float64;
+   restaurantId: RestaurantId;
+ };
+type MenuItemId = nat;
+type MenuCategory = 
+ variant {
+   appetizer;
+   dessert;
+   drink;
+   main;
+ };
+type GalleryImagePublic = 
+ record {
+   caption: text;
+   id: GalleryImageId;
+   order: nat;
+   restaurantId: RestaurantId;
+   url: text;
+ };
+type GalleryImageInput = 
+ record {
+   caption: text;
+   order: nat;
+   restaurantId: RestaurantId;
+   url: text;
+ };
+type GalleryImageId = nat;
+type DayOfWeek = 
+ variant {
+   friday;
+   monday;
+   saturday;
+   sunday;
+   thursday;
+   tuesday;
+   wednesday;
+ };
+type AvailabilitySettingsPublic = 
+ record {
+   availableTimeSlots: vec text;
+   bookingLeadTimeDays: nat;
+   maxCoversPerService: nat;
+   maxPartySize: nat;
+   restaurantId: RestaurantId;
+ };
+type AvailabilitySettingsInput = 
+ record {
+   availableTimeSlots: vec text;
+   bookingLeadTimeDays: nat;
+   maxCoversPerService: nat;
+   maxPartySize: nat;
+ };
+type AvailabilityResult = 
+ record {
+   availableSeats: nat;
+   date: text;
+   reservedSeats: nat;
+   restaurantId: RestaurantId;
+   timeSlot: text;
+   totalCapacity: nat;
+ };
+service : {
+  addFavoriteRestaurant: (restaurantId: RestaurantId) -> (UserProfilePublic);
+  addGalleryImage: (input: GalleryImageInput) -> (GalleryImagePublic);
+  addMenuItem: (input: MenuItemInput) -> (MenuItemPublic);
+  cancelReservation: (id: ReservationId) -> (opt ReservationPublic);
+  checkAvailability: (restaurantId: RestaurantId, date: text, timeSlot:
+   text) -> (AvailabilityResult) query;
+  confirmReservation: (id: ReservationId) -> (opt ReservationPublic);
+  createReservation: (input: ReservationInput) -> (ReservationPublic);
+  createRestaurant: (input: RestaurantInput) -> (RestaurantPublic);
+  deleteGalleryImage: (id: GalleryImageId) -> (bool);
+  deleteMenuItem: (id: MenuItemId) -> (bool);
+  getAvailabilitySettings: (restaurantId: RestaurantId) ->
+   (opt AvailabilitySettingsPublic) query;
+  getGalleryImages: (restaurantId: RestaurantId) ->
+   (vec GalleryImagePublic) query;
+  getMenuItems: (restaurantId: RestaurantId) -> (vec MenuItemPublic) query;
+  getMyProfile: () -> (UserProfilePublic) query;
+  getMyReservationHistory: () -> (vec ReservationPublic) query;
+  getMyReservations: () -> (vec ReservationPublic) query;
+  getMyRestaurant: () -> (opt RestaurantId) query;
+  getReservationByReference: (bookingReference: text) ->
+   (opt ReservationPublic) query;
+  getReservationsByEmail: (email: text) -> (vec ReservationPublic) query;
+  getReservationsByRestaurant: (restaurantId: RestaurantId) ->
+   (vec ReservationPublic) query;
+  getRestaurant: (id: RestaurantId) -> (opt RestaurantPublic) query;
+  linkAdminToRestaurant: (restaurantId: RestaurantId) -> ();
+  removeFavoriteRestaurant: (restaurantId: RestaurantId) ->
+   (UserProfilePublic);
+  searchRestaurants: (filter: SearchFilter) -> (vec RestaurantPublic) query;
+  updateGalleryImage: (id: GalleryImageId, input: GalleryImageInput) ->
+   (opt GalleryImagePublic);
+  updateMenuItem: (id: MenuItemId, input: MenuItemInput) ->
+   (opt MenuItemPublic);
+  updateRestaurant: (id: RestaurantId, input: RestaurantInput) ->
+   (opt RestaurantPublic);
+  upsertAvailabilitySettings: (restaurantId: RestaurantId, input:
+   AvailabilitySettingsInput) -> (AvailabilitySettingsPublic);
+}

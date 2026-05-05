@@ -1,0 +1,53 @@
+import { c as createLucideIcon, j as jsxRuntimeExports, a9 as Slot, g as cn, aa as cva } from "./index-Cccc_cne.js";
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode = [
+  [
+    "path",
+    {
+      d: "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",
+      key: "r04s7s"
+    }
+  ]
+];
+const Star = createLucideIcon("star", __iconNode);
+const badgeVariants = cva(
+  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  {
+    variants: {
+      variant: {
+        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+        secondary: "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+        destructive: "border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+);
+function Badge({
+  className,
+  variant,
+  asChild = false,
+  ...props
+}) {
+  const Comp = asChild ? Slot : "span";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Comp,
+    {
+      "data-slot": "badge",
+      className: cn(badgeVariants({ variant }), className),
+      ...props
+    }
+  );
+}
+export {
+  Badge as B,
+  Star as S
+};

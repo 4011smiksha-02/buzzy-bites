@@ -1,0 +1,132 @@
+// Version: 1.0.0
+type AvailabilitySettings__482575946 =
+  {
+    var availableTimeSlots : [Text];
+    var bookingLeadTimeDays : Nat;
+    var maxCoversPerService : Nat;
+    var maxPartySize : Nat;
+    restaurantId : RestaurantId__389023155
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DayOfWeek__86389086 =
+  {#friday; #monday; #saturday; #sunday; #thursday; #tuesday; #wednesday};
+type GalleryImageId__1023963627 = Nat;
+type GalleryImage__817165290 =
+  {
+    var caption : Text;
+    id : GalleryImageId__1023963627;
+    var order : Nat;
+    restaurantId : RestaurantId__389023155;
+    var url : Text
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type MenuCategory__447177382 = {#appetizer; #dessert; #drink; #main};
+type MenuItemId__18119667 = Nat;
+type MenuItem__25360883 =
+  {
+    var category : MenuCategory__447177382;
+    var description : Text;
+    id : MenuItemId__18119667;
+    var imageUrl : ?Text;
+    var name : Text;
+    var price : Float;
+    restaurantId : RestaurantId__389023155
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OpeningHours__875286391 =
+  {close : Text; closed : Bool; day : DayOfWeek__86389086; open : Text};
+type PriceRange__321702079 = {#four; #one; #three; #two};
+type ReservationId__879094814 = Nat;
+type ReservationStatus__703841619 = {#cancelled; #confirmed; #pending};
+type Reservation__791493290 =
+  {
+    bookingReference : Text;
+    createdAt : Timestamp__301639476;
+    var date : Text;
+    var guestCount : Nat;
+    var guestEmail : Text;
+    var guestName : Text;
+    var guestPhone : Text;
+    id : ReservationId__879094814;
+    restaurantId : RestaurantId__389023155;
+    var specialRequests : Text;
+    var status : ReservationStatus__703841619;
+    var timeSlot : Text
+  };
+type RestaurantId__389023155 = Nat;
+type Restaurant__761304188 =
+  {
+    var address : Text;
+    var averageRating : Float;
+    var cuisineType : Text;
+    var description : Text;
+    var email : Text;
+    id : RestaurantId__389023155;
+    var name : Text;
+    var neighborhood : Text;
+    var openingHours : [OpeningHours__875286391];
+    var phone : Text;
+    var priceRange : PriceRange__321702079
+  };
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type UserProfile__1009003526 =
+  {
+    var favoriteRestaurantIds : [RestaurantId__389023155];
+    var reservationIds : [ReservationId__879094814];
+    userId : UserId__158757552
+  };
+actor {
+  stable adminLinks :
+    {
+      var root : Node__46230540<UserId__158757552, RestaurantId__389023155>;
+      var size : Nat__490723111
+    };
+  stable availabilitySettings :
+    {
+      var root :
+        Node__46230540<RestaurantId__389023155,
+                        AvailabilitySettings__482575946>;
+      var size : Nat__490723111
+    };
+  stable galleryImages :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?GalleryImage__817165290]];
+      var elementIndex : Nat__490723111
+    };
+  stable menuItems :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?MenuItem__25360883]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextGalleryImageId : {var val : Nat};
+  stable nextMenuItemId : {var val : Nat};
+  stable nextReservationId : {var val : Nat};
+  stable nextRestaurantId : {var val : Nat};
+  stable reservations :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Reservation__791493290]];
+      var elementIndex : Nat__490723111
+    };
+  stable restaurants :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Restaurant__761304188]];
+      var elementIndex : Nat__490723111
+    };
+  stable var sampleDataLoaded : Bool;
+  stable userProfiles :
+    {
+      var root : Node__46230540<UserId__158757552, UserProfile__1009003526>;
+      var size : Nat__490723111
+    }
+};

@@ -1,0 +1,26 @@
+{
+  "overview": "Buzzy Bites is a restaurant discovery and table reservation platform where diners browse restaurants, explore menus and ambience, and book tables — while restaurant owners manage their listings and reservations through a protected admin dashboard.",
+  "features": [
+    "Restaurant discovery with search and filters by cuisine, neighborhood, and price",
+    "Image carousel and gallery showcasing restaurant ambience",
+    "Full menu browsing by category (appetizers, mains, desserts, drinks)",
+    "Table reservation flow with date picker, time slots, and guest count",
+    "Real-time availability display for time slots",
+    "Booking confirmation with reference number",
+    "Restaurant admin dashboard for managing reservations, menus, and images",
+    "Internet Identity login for secure access",
+    "Responsive mobile-first design across all devices"
+  ],
+  "category": "food-hospitality",
+  "tags": [
+    "restaurant",
+    "reservations",
+    "food",
+    "dining",
+    "hospitality",
+    "discovery",
+    "menu",
+    "booking"
+  ],
+  "last_updated": "2026-05-04T12:11:36.487Z"
+}
